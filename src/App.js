@@ -27,7 +27,7 @@ function App() {
         path={ROUTES.HOME}
         exact
         element={
-          <Suspense fallback={<div>Loadin...</div>}>
+          <Suspense fallback={<div className="loader"></div>}>
             <Home />
           </Suspense>
         }

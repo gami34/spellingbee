@@ -513,16 +513,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   top: 0px;
 }
 
-.right-auto {
-  right: auto;
-}
-
 .top-full {
   top: 100%;
 }
 
 .left-1 {
   left: 0.25rem;
+}
+
+.right-auto {
+  right: auto;
 }
 
 .z-10 {
@@ -562,16 +562,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-right: 1rem;
 }
 
+.ml-4 {
+  margin-left: 1rem;
+}
+
 .mb-2 {
   margin-bottom: 0.5rem;
 }
 
 .-mr-10 {
   margin-right: -2.5rem;
-}
-
-.ml-4 {
-  margin-left: 1rem;
 }
 
 .mr-2 {
@@ -658,10 +658,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   max-height: 100%;
 }
 
-.min-h-80 {
-  min-height: 20rem;
-}
-
 .w-3\/12 {
   width: 25%;
 }
@@ -686,6 +682,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 1px;
 }
 
+.w-1\/2 {
+  width: 50%;
+}
+
 .w-2\.5 {
   width: 0.625rem;
 }
@@ -704,10 +704,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-3 {
   width: 0.75rem;
-}
-
-.w-1\/2 {
-  width: 50%;
 }
 
 .min-w-44 {
@@ -829,6 +825,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(115 115 115 / var(--tw-border-opacity));
 }
 
+.border-gray-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(156 163 175 / var(--tw-border-opacity));
+}
+
 .border-white {
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
@@ -837,11 +838,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-gray-200 {
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
-}
-
-.border-gray-400 {
-  --tw-border-opacity: 1;
-  border-color: rgb(156 163 175 / var(--tw-border-opacity));
 }
 
 .bg-green-dark {
@@ -1131,6 +1127,43 @@ a.active {
   color: rgb(250 204 21);
 }
 
+.loader:empty {
+  position: absolute;
+  top: calc(50% - 4em);
+  left: calc(50% - 4em);
+  width: 6em;
+  height: 6em;
+  border: 1.1em solid #00000033;
+  border-left: 1.1em solid #1e3d38;
+  border-radius: 50%;
+  -webkit-animation: load8 1.1s infinite linear;
+          animation: load8 1.1s infinite linear;
+}
+
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
 .last\:mb-0:last-child {
   margin-bottom: 0px;
 }
@@ -1179,6 +1212,11 @@ a.active {
   color: rgb(75 85 99 / var(--tw-text-opacity));
 }
 
+.hover\:text-gray-400:hover {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
+}
+
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -1187,11 +1225,6 @@ a.active {
 .hover\:text-yellow-500:hover {
   --tw-text-opacity: 1;
   color: rgb(234 179 8 / var(--tw-text-opacity));
-}
-
-.hover\:text-gray-400:hover {
-  --tw-text-opacity: 1;
-  color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
 .hover\:opacity-50:hover {
