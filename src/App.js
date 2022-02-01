@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import * as ROUTES from "./constants/routes";
 
 const Home = lazy(() => import("./pages/Home"));
+const Signup = lazy(() => import("./pages/Signup"));
 
 function App() {
   const socket = useSelector((state) => state.socketIO?.socket);
@@ -27,8 +28,17 @@ function App() {
         path={ROUTES.HOME}
         exact
         element={
-          <Suspense fallback={<div className="loader"></div>}>
+          <Suspense fallback={<div></div>}>
             <Home />
+          </Suspense>
+        }
+      />
+      <Route
+        path={ROUTES.SiGNUP}
+        exact
+        element={
+          <Suspense fallback={<div></div>}>
+            <Signup />
           </Suspense>
         }
       />
