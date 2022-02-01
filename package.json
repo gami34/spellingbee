@@ -20,8 +20,12 @@
     "redux-thunk": "^2.4.1"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
+    "build:css": "tailwindcss -i src/styles/tailwind.css -o public/style.css",
+    "watch:css": "tailwindcss -i src/styles/tailwind.css -o public/style.css -w",
+    "craco:start": "sleep 5 && craco start",
+    "craco:build": "sleep 5 && craco build",
+    "start": "run-p watch:css craco:start",
+    "build": "run-s build:css craco:build",
     "test": "craco test",
     "eject": "craco eject",
     "lint": "eslint --cache --fix  \"./src/**/*.+(js|yml|yaml|json)\"",
