@@ -1,5 +1,7 @@
 import './App.css'
 
+import { Button } from 'antd';
+
 function App() {
   return (
     <div className="App">
@@ -7,6 +9,9 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
+        <div className="App">
+    <Button type="primary">Button</Button>
+  </div>
         <a
           className="App-link"
           href="https://reactjs.org"
