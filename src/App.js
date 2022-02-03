@@ -4,7 +4,8 @@ import { Route, Routes } from "react-router-dom";
 import * as ROUTES from "./constants/routes";
 
 const Home = lazy(() => import("./pages/Home"));
-const Signup = lazy(() => import("./pages/Signup"));
+const IndividualForm = lazy(() => import("./pages/IndividualForm"));
+const MultipleForm = lazy(() => import("./pages/MultipleForm"));
 
 function App() {
   const socket = useSelector((state) => state.socketIO?.socket);
@@ -34,11 +35,20 @@ function App() {
         }
       />
       <Route
-        path={ROUTES.SiGNUP}
+        path={ROUTES.INDIVIDUAL_REG}
         exact
         element={
           <Suspense fallback={<div></div>}>
-            <Signup />
+            <IndividualForm />
+          </Suspense>
+        }
+      />
+      <Route
+        path={ROUTES.MULTIPLE_REG}
+        exact
+        element={
+          <Suspense fallback={<div></div>}>
+            <MultipleForm />
           </Suspense>
         }
       />

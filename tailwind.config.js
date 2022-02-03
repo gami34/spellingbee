@@ -12,6 +12,7 @@ module.exports = {
           DEFAULT: "#354b46",
           dark: "#1E3D38",
         },
+        yellowgreen: "#89bc08",
       },
       minWidth: {
         36: "9rem",

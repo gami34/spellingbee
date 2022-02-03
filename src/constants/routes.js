@@ -5,3 +5,5 @@ export const PROFILE = "/profile/:username";
 export const SiGNUP = "/signup";
 export const POLICY = "/policy";
 export const TERMS = "/termsandcondition";
+export const INDIVIDUAL_REG = "/individual";
+export const MULTIPLE_REG = "/multiple";

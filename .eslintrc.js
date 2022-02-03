@@ -16,7 +16,7 @@ module.exports = {
   rules: {
     "no-unused-vars": 0,
     "prettier/prettier": [
-      "error",
+      0,
       {
         endOfLine: "lf",
       },
