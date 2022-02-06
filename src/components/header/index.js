@@ -31,7 +31,7 @@ const Header = () => {
       <p className="text-xs text-gray-800 mx-4 text-justify">
         <span className="font-bold">The awards are Trophy, Medals, Scholarship funds and the top 3 winners in each of the junior and senior category.</span> The awards are Trophy, Medals, Scholarship funds and the top 3 winners in each of the junior
         and senior category at the national final will represent Nigeria at the Intercontinental Spelling Bee Competition ICSB in Dubai. The Spelling Bee mission is promoting literacy and developing communication skills in our future leaders at the
-        early stages of their life! Incidunt dignissimos minima molestiae asperiores error. Beatae, velit voluptatibus natus quidem ducimus a
+        early stages of their life!
       </p>
       <div className="flex justify-center items-center gap-4 px-4">
         <Link to={ROUTES.INDIVIDUAL_REG} className="text-center text-gray-700 border border-gray-500 text-xl p-2 sm:p-4 hover:text-yellowgreen font-semibold">
