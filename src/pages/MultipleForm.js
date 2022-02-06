@@ -12,7 +12,6 @@ const MultipleForm = () => {
   const states = Nigeria.states();
 
   const [lgas, setLGAS] = React.useState([]);
-  const [wards, setWards] = React.useState([]);
   const [tableData, setTableData] = React.useState([]);
   const [record, setRecord] = React.useState({});
   const [show, setShow] = React.useState(false);
@@ -125,7 +124,6 @@ const MultipleForm = () => {
 
   const handleNigeriaStateChange = (value) => {
     setLGAS(Nigeria.lgas(value).lgas);
-    setWards(Nigeria.lgas(value).senatorial_districts);
   };
 
   const onSubmit = (values) => {
@@ -213,24 +211,8 @@ const MultipleForm = () => {
                       ))}
                     </Select>
                   </Form.Item>
-                  <Form.Item
-                    name="ward"
-                    label="Ward"
-                    labelAlign="left"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please Select your Ward!",
-                      },
-                    ]}
-                  >
-                    <Select>
-                      {wards.map((ward) => (
-                        <Select.Option key={ward} value={ward}>
-                          {ward}
-                        </Select.Option>
-                      ))}
-                    </Select>
+                  <Form.Item name="ward" label="Ward" labelAlign="left">
+                    <Input type="text" />
                   </Form.Item>
                   <Form.Item
                     name="category"
@@ -244,7 +226,8 @@ const MultipleForm = () => {
                     ]}
                   >
                     <Select placeholder="select your gender">
-                      <Select.Option value="9">Season 9</Select.Option>
+                      <Select.Option value="9">Primary</Select.Option>
+                      <Select.Option value="9">Secondary</Select.Option>
                     </Select>
                   </Form.Item>
                 </div>

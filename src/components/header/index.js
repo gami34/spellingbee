@@ -21,14 +21,17 @@ const Header = () => {
         NAPPS SPELLING BEE COMPETITION
       </h3>
       <p className="text-xs text-gray-800 mx-4 text-justify">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt dignissimos minima molestiae asperiores error. Beatae, velit voluptatibus natus quidem ducimus a exercitationem harum eligendi quos sit expedita hic repudiandae? Nesciunt
-        commodi dolorum, perspiciatis quos ipsam nemo? Enim natus sed delectus modi aperiam ullam impedit, quod laborum, quia, nisi cumque fuga. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi perspiciatis vel ullam velit voluptatibus
-        voluptates cumque libero aperiam doloribus,
+        The Spelling Bee is a competition designed to inculcate the basic imperatives of effective communication, ultimately impacting improved spelling skills, development of poise, increase students’ vocabulary, pronunciation and accurate word
+        usage.
+      </p>
+      <p className="text-xs text-gray-800 mx-4 text-justify">
+        The programme emphasizes the importance of communication because being erudite begins with communication, and communication entails the transaction of ideas, using words and symbols as a fundamental platform.
       </p>
       <h6></h6>
       <p className="text-xs text-gray-800 mx-4 text-justify">
-        <span className="font-bold">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</span>
-        <br /> Incidunt dignissimos minima molestiae asperiores error. Beatae, velit voluptatibus natus quidem ducimus a exercitationem harum eligendi quos sit expedita hic repudiandae? Nesciunt commodi dolorum, perspiciatis quos ipsam nemo?
+        <span className="font-bold">The awards are Trophy, Medals, Scholarship funds and the top 3 winners in each of the junior and senior category.</span> The awards are Trophy, Medals, Scholarship funds and the top 3 winners in each of the junior
+        and senior category at the national final will represent Nigeria at the Intercontinental Spelling Bee Competition ICSB in Dubai. The Spelling Bee mission is promoting literacy and developing communication skills in our future leaders at the
+        early stages of their life! Incidunt dignissimos minima molestiae asperiores error. Beatae, velit voluptatibus natus quidem ducimus a
       </p>
       <div className="flex justify-center items-center gap-4 px-4">
         <Link to={ROUTES.INDIVIDUAL_REG} className="text-center text-gray-700 border border-gray-500 text-xl p-2 sm:p-4 hover:text-yellowgreen font-semibold">
