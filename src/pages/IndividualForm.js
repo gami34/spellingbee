@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Checkbox, Divider, Select } from "antd";
 import Navbar from "../components/navbar";
 import Nigeria from "naija-state-local-government";
+import { useDispatch } from "react-redux";
+import { registration } from "../actions/registration";
 
 const IndividualForm = () => {
   const [submitProcessing, setSubmitProcessing] = useState(false);
   const states = Nigeria.states();
 
   const [lgas, setLGAS] = React.useState([]);
+  const dispatch = useDispatch();
 
   const formItemLayout = {
     labelCol: {
@@ -22,7 +25,7 @@ const IndividualForm = () => {
     },
   };
   const prefixSelector = (
-    <Form.Item name="mobile_prefix" noStyle>
+    <Form.Item name="parent_mobile_prefix" noStyle>
       <Select style={{ width: 90 }}>
         <Select.Option value="+234">+234</Select.Option>
       </Select>
@@ -35,6 +38,29 @@ const IndividualForm = () => {
 
   const onSubmit = (values) => {
     setSubmitProcessing(true);
+    const data = {
+      category: values.category,
+      school_email: values.school_email,
+      lga: values.lga,
+      school_mobile_suffix: values.school_mobile_suffix,
+      mobile_prefix: values.mobile_prefix,
+      school_address: values.school_address,
+      school_name: values.school_name,
+      school_head: values.school_head,
+      state: values.state,
+      ward: values.ward,
+      students: [
+        {
+          student_name: values.student_name,
+          student_age: values.student_age,
+          parent_name: values.parent_name,
+          parent_email: values.parent_email,
+          parent_number: values.parent_mobile_prefix + values.parent_mobile_suffix,
+          parent_address: values.parent_address,
+        },
+      ],
+    };
+    dispatch(registration(data));
   };
 
   useEffect(() => {
@@ -72,6 +98,7 @@ const IndividualForm = () => {
                 {...formItemLayout}
                 initialValues={{
                   mobile_prefix: "+234",
+                  parent_mobile_prefix: "+234",
                 }}
               >
                 <div className="grid grid-cols-2  sm:grid-cols-4 gap-4">
@@ -96,7 +123,7 @@ const IndividualForm = () => {
                   </Form.Item>
                   <Form.Item
                     name="lga"
-                    label="LG"
+                    label="LGA"
                     labelAlign="left"
                     rules={[
                       {
@@ -128,8 +155,8 @@ const IndividualForm = () => {
                     ]}
                   >
                     <Select placeholder="select your gender">
-                      <Select.Option value="9">Primary</Select.Option>
-                      <Select.Option value="9">Secondary</Select.Option>
+                      <Select.Option value="primary">Primary</Select.Option>
+                      <Select.Option value="secondary">Secondary</Select.Option>
                     </Select>
                   </Form.Item>
                 </div>
@@ -161,7 +188,7 @@ const IndividualForm = () => {
                     <Input />
                   </Form.Item>
 
-                  <Form.Item name="mobile" label="Mobile No:" labelAlign="left" rules={[{ required: true, message: "Please input your phone number!" }]}>
+                  <Form.Item name="school_mobile_suffix" label="Mobile No:" labelAlign="left" rules={[{ required: true, message: "Please input your phone number!" }]}>
                     <Input addonBefore={prefixSelector} />
                   </Form.Item>
                 </div>
@@ -181,7 +208,7 @@ const IndividualForm = () => {
                   </Form.Item>
 
                   <Form.Item
-                    name="email"
+                    name="school_email"
                     labelAlign="left"
                     label="School Email:"
                     rules={[
@@ -245,7 +272,7 @@ const IndividualForm = () => {
                   </Form.Item>
 
                   <Form.Item
-                    name="parent_number"
+                    name="parent_mobile_suffix"
                     labelAlign="left"
                     label="Parent No:"
                     rules={[
@@ -255,7 +282,7 @@ const IndividualForm = () => {
                       },
                     ]}
                   >
-                    <Input placeholder="Parent's Number" />
+                    <Input addonBefore={prefixSelector} placeholder="Parent's Number" />
                   </Form.Item>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 mb-6">

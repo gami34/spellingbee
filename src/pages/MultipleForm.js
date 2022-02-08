@@ -6,6 +6,8 @@ import Nigeria from "naija-state-local-government";
 import AddStudentModal from "../components/AddStudentModal";
 import ConfirmDelete from "../components/ConfirmDelete";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { registration } from "../actions/registration";
 
 const MultipleForm = () => {
   const [submitProcessing, setSubmitProcessing] = useState(false);
@@ -17,6 +19,8 @@ const MultipleForm = () => {
   const [show, setShow] = React.useState(false);
   const [addStudentFormvisible, setAddStudentFormVisible] = React.useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
+
+  const dispatch = useDispatch();
 
   const formItemLayout = {
     labelCol: {
@@ -35,17 +39,19 @@ const MultipleForm = () => {
     setRecord(record);
     setAddStudentFormVisible(true);
   };
+
   const onStudentEdit = (editedData) => {
     const dataIndex = tableData.findIndex((data) => data.key === record.key);
     tableData.splice(dataIndex, 1, {
       key: record.key,
-      p_address: editedData.parent_address,
-      p_email: editedData.parent_email,
-      p_name: editedData.parent_name,
-      p_no: editedData.parent_number,
-      s_age: editedData.student_age,
-      s_name: editedData.student_name,
+      parent_address: editedData.parent_address,
+      parent_email: editedData.parent_email,
+      parent_name: editedData.parent_name,
+      parent_number: editedData.parent_mobile_prefix + editedData.parent_mobile_suffix,
+      student_age: editedData.student_age,
+      student_name: editedData.student_name,
     });
+
     setTableData(tableData);
     setRecord({});
     setAddStudentFormVisible(false);
@@ -59,35 +65,35 @@ const MultipleForm = () => {
   const columns = [
     {
       title: "Student's Name",
-      dataIndex: "s_name",
+      dataIndex: "student_name",
       width: 80,
-      key: "s_name",
+      key: "student_name",
       fixed: "left",
     },
     {
       title: "Student's Age",
-      dataIndex: "s_age",
-      key: "s_age",
+      dataIndex: "student_age",
+      key: "student_age",
     },
     {
       title: "Parent's Name",
-      dataIndex: "p_name",
-      key: "p_name",
+      dataIndex: "parent_name",
+      key: "parent_name",
     },
     {
       title: "Parent's Address",
-      dataIndex: "p_address",
-      key: "p_address",
+      dataIndex: "parent_address",
+      key: "parent_address",
     },
     {
       title: "Parent's No",
-      dataIndex: "p_no",
-      key: "p_no",
+      dataIndex: "parent_number",
+      key: "parent_number",
     },
     {
       title: "Parent's Email",
-      dataIndex: "p_email",
-      key: "p_email",
+      dataIndex: "parent_email",
+      key: "parent_email",
       width: 80,
     },
     {
@@ -128,9 +134,20 @@ const MultipleForm = () => {
 
   const onSubmit = (values) => {
     setSubmitProcessing(true);
+    const data = { ...values, students: tableData };
+    dispatch(registration(data));
   };
+
   const onStudentSubmit = (values) => {
-    tableData.push({ key: tableData.length + 1, s_name: values.student_name, s_age: values.student_age, p_name: values.parent_name, p_address: values.parent_address, p_no: values.parent_number, p_email: values.parent_email });
+    tableData.push({
+      key: tableData.length + 1,
+      student_name: values.student_name,
+      student_age: values.student_age,
+      parent_name: values.parent_name,
+      parent_address: values.parent_address,
+      parent_number: values.parent_mobile_prefix + values.parent_mobile_suffix,
+      parent_email: values.parent_email,
+    });
     setTableData(tableData);
     setAddStudentFormVisible(false);
   };
@@ -226,8 +243,8 @@ const MultipleForm = () => {
                     ]}
                   >
                     <Select placeholder="select your gender">
-                      <Select.Option value="9">Primary</Select.Option>
-                      <Select.Option value="9">Secondary</Select.Option>
+                      <Select.Option value="primary">Primary</Select.Option>
+                      <Select.Option value="secondary">Secondary</Select.Option>
                     </Select>
                   </Form.Item>
                 </div>
@@ -259,7 +276,7 @@ const MultipleForm = () => {
                     <Input />
                   </Form.Item>
 
-                  <Form.Item name="mobile" label="Mobile No:" labelAlign="left" rules={[{ required: true, message: "Please input your phone number!" }]}>
+                  <Form.Item name="school_mobile_suffix" label="Mobile No:" labelAlign="left" rules={[{ required: true, message: "Please input your phone number!" }]}>
                     <Input addonBefore={prefixSelector} />
                   </Form.Item>
                 </div>
@@ -279,7 +296,7 @@ const MultipleForm = () => {
                   </Form.Item>
 
                   <Form.Item
-                    name="email"
+                    name="school_email"
                     labelAlign="left"
                     label="School Email:"
                     rules={[

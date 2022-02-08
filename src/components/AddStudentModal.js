@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Modal } from "antd";
+import { Form, Input, Button, Modal, Select } from "antd";
 
 const AddStudentModal = ({ record, setRecord, onStudentEdit, onStudentSubmit, addStudentFormvisible, setAddStudentFormVisible }) => {
   const formItemLayout = {
@@ -14,6 +14,14 @@ const AddStudentModal = ({ record, setRecord, onStudentEdit, onStudentSubmit, ad
       },
     },
   };
+
+  const prefixSelector = (
+    <Form.Item name="parent_mobile_prefix" noStyle>
+      <Select style={{ width: 90 }}>
+        <Select.Option value="+234">+234</Select.Option>
+      </Select>
+    </Form.Item>
+  );
   return (
     <Modal
       closable={true}
@@ -35,12 +43,13 @@ const AddStudentModal = ({ record, setRecord, onStudentEdit, onStudentSubmit, ad
         {...formItemLayout}
         initialValues={{
           mobile_prefix: "+234",
-          student_name: record.s_name,
-          student_age: record.s_age,
-          parent_name: record.p_name,
-          parent_number: record.p_no,
-          parent_address: record.p_address,
-          parent_email: record.p_email,
+          parent_mobile_prefix: "+234",
+          student_name: record.student_name,
+          student_age: record.student_age,
+          parent_name: record.parent_name,
+          parent_mobile_suffix: record.parent_number && record.parent_number.slice(4, record.parent_number.length),
+          parent_address: record.parent_address,
+          parent_email: record.parent_email,
         }}
       >
         <h3 className="text-center w-full text-lg">Student Information</h3>
@@ -88,7 +97,7 @@ const AddStudentModal = ({ record, setRecord, onStudentEdit, onStudentSubmit, ad
           </Form.Item>
 
           <Form.Item
-            name="parent_number"
+            name="parent_mobile_suffix"
             labelAlign="left"
             label="Parent No:"
             rules={[
@@ -98,7 +107,7 @@ const AddStudentModal = ({ record, setRecord, onStudentEdit, onStudentSubmit, ad
               },
             ]}
           >
-            <Input placeholder="Parent's Number" />
+            <Input addonBefore={prefixSelector} placeholder="Parent's Number" />
           </Form.Item>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 mb-6">
