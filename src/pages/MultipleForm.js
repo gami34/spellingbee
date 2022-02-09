@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, Divider, Select, Table, Popconfirm, Modal } from "antd";
+import { Form, Button, Divider, Table } from "antd";
 import Navbar from "../components/navbar";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import Nigeria from "naija-state-local-government";
 import AddStudentModal from "../components/AddStudentModal";
 import ConfirmDelete from "../components/ConfirmDelete";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registration } from "../actions/registration";
+import { FormWrapper } from "../components/FormWrapper";
+import { studentTableColumn } from "../constants/studentTableColumn";
+import { FormItem } from "../components/FormItem";
+import { SelectItem } from "../components/SelectItem";
+import * as FormRules from "../constants/formRules";
+import { MobilePrefixSelector } from "../components/MobilePrefixSelector";
+import { SubmitButton } from "../components/SubmitButton";
+import { formItemLayout } from "../constants/formItemLayout";
 
 const MultipleForm = () => {
   const [submitProcessing, setSubmitProcessing] = useState(false);
@@ -21,19 +28,6 @@ const MultipleForm = () => {
   const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
 
   const dispatch = useDispatch();
-
-  const formItemLayout = {
-    labelCol: {
-      xs: {
-        span: 24,
-      },
-    },
-    wrapperCol: {
-      xs: {
-        span: 24,
-      },
-    },
-  };
 
   const handleStudentEdit = (record) => {
     setRecord(record);
@@ -62,64 +56,7 @@ const MultipleForm = () => {
     setTableData(tableData);
     setShow(true);
   };
-  const columns = [
-    {
-      title: "Student's Name",
-      dataIndex: "student_name",
-      width: 80,
-      key: "student_name",
-      fixed: "left",
-    },
-    {
-      title: "Student's Age",
-      dataIndex: "student_age",
-      key: "student_age",
-    },
-    {
-      title: "Parent's Name",
-      dataIndex: "parent_name",
-      key: "parent_name",
-    },
-    {
-      title: "Parent's Address",
-      dataIndex: "parent_address",
-      key: "parent_address",
-    },
-    {
-      title: "Parent's No",
-      dataIndex: "parent_number",
-      key: "parent_number",
-    },
-    {
-      title: "Parent's Email",
-      dataIndex: "parent_email",
-      key: "parent_email",
-      width: 80,
-    },
-    {
-      title: "Actions",
-      dataIndex: "operation",
-      render: (_, record) =>
-        tableData.length >= 1 ? (
-          <span className="flex gap-x-4">
-            <Link to="#" className="text-green-dark" onClick={() => handleStudentEdit(record)}>
-              Edit
-            </Link>
-            <Popconfirm className="text-red-500" title="Sure to delete?" onConfirm={() => handleStudentDelete(record.key)}>
-              <Link to="#">Delete</Link>
-            </Popconfirm>
-          </span>
-        ) : null,
-    },
-  ];
 
-  const prefixSelector = (
-    <Form.Item name="mobile_prefix" noStyle>
-      <Select style={{ width: 90 }}>
-        <Select.Option value="+234">+234</Select.Option>
-      </Select>
-    </Form.Item>
-  );
   const onSelectChange = (selectedRowKeys) => {
     setSelectedRowKeys(selectedRowKeys);
   };
@@ -161,185 +98,54 @@ const MultipleForm = () => {
   return (
     <>
       <Navbar />
-      <div className="flex justify-center min-h-screen bg-gray-50">
-        <div className="min-h-80 w-11/12 sm:w-8/12 bg-white my-24 lg:rounded-lg drop-shadow-lg shadow-green-dark">
-          <div className="w-full flex items-center flex-col">
-            <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 w-full mb-4  border-b border-gray-300">
-              <h3 className="text-center font-bold text-lg sm:text-2xl">MULTIPLE REGISTRATION</h3>
-              <ul className=" list-inside list-disc text-xs m-0 w-full">
-                <li>This form is meant to register single students</li>
-                <li>Fill in the correct and most recent information</li>
-                <li>
-                  Click on the <span className="font-bold">&quot;Make Payment&quot;</span> button to make registration payment and have information submitted
-                </li>
-                <li>
-                  Registration for each student is <span className="font-bold">N3000 (Three Thousand Naira Only )</span>
-                </li>
-                <li>Ensure you have the total sum for the number of students available in an account where it can be transferred when needed</li>
-              </ul>
+      <FormWrapper header="Multiple Registration" type="multiple">
+        <Form
+          name="individual_signup"
+          className="w-full"
+          onFinish={onSubmit}
+          {...formItemLayout}
+          initialValues={{
+            mobile_prefix: "+234",
+          }}
+        >
+          <div className="grid grid-cols-2  sm:grid-cols-4 gap-4">
+            <FormItem name="state" label="State" rule={FormRules.schoolStateFormRule}>
+              <SelectItem onChange={handleNigeriaStateChange} dataMap={states} />
+            </FormItem>
+            <FormItem name="lga" label="LGA" rule={FormRules.schoolLGAFormRule}>
+              <SelectItem dataMap={lgas} />
+            </FormItem>
+            <FormItem name="ward" label="Ward" type="text" />
+            <FormItem name="category" label="Category" rule={FormRules.schoolCategoryFormRule}>
+              <SelectItem dataMap={["primary", "secondary"]} />
+            </FormItem>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-4">
+            <FormItem name="school_name" label="School's Name:" rule={FormRules.scholeNameFormRule} />
+            <FormItem name="school_head" label="School's Head:" rule={FormRules.scholeHeadFormRule} />
+            <FormItem name="school_mobile_suffix" label="Mobile No:" rule={FormRules.schoolMobileFormRule} addonBefore={<MobilePrefixSelector name="school_mobile_prefix" />} />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+            <FormItem name="school_address" label="School's Address:" rule={FormRules.schoolAddressFormRule} />
+            <FormItem name="school_email" label="School Email:" rule={FormRules.schoolEmailFormRule} type="email" />
+          </div>
+          <Divider className="m-0"></Divider>
+          <h3 className="text-center w-full text-lg">Student Information</h3>
+          <ConfirmDelete show={show} setShow={setShow} />
+          <div className="flex flex-col md:flex-row gap-x-2 gap-y-4 md:gap-y-0 w-full">
+            <div className="w-full md:w-3/12 text-xs">
+              <Button type="primary" className="w-full text-xs" onClick={() => setAddStudentFormVisible(true)} icon={<PlusCircleOutlined />}>
+                Add Student
+              </Button>
+              <AddStudentModal record={{ ...record }} setRecord={setRecord} addStudentFormvisible={addStudentFormvisible} setAddStudentFormVisible={setAddStudentFormVisible} onStudentEdit={onStudentEdit} onStudentSubmit={onStudentSubmit} />
             </div>
-            <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 w-full">
-              <h3 className="text-center w-full text-lg">School Information</h3>
-              <Form
-                name="individual_signup"
-                className="w-full"
-                onFinish={onSubmit}
-                {...formItemLayout}
-                initialValues={{
-                  mobile_prefix: "+234",
-                }}
-              >
-                <div className="grid grid-cols-2  sm:grid-cols-4 gap-4">
-                  <Form.Item
-                    name="state"
-                    label="State"
-                    labelAlign="left"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please Select your state!",
-                      },
-                    ]}
-                  >
-                    <Select onChange={handleNigeriaStateChange}>
-                      {states.map((state) => (
-                        <Select.Option key={state} value={state}>
-                          {state}
-                        </Select.Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
-                  <Form.Item
-                    name="lga"
-                    label="LG"
-                    labelAlign="left"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please Select your Local Government Area!",
-                      },
-                    ]}
-                  >
-                    <Select>
-                      {lgas.map((lga) => (
-                        <Select.Option key={lga} value={lga}>
-                          {lga}
-                        </Select.Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
-                  <Form.Item name="ward" label="Ward" labelAlign="left">
-                    <Input type="text" />
-                  </Form.Item>
-                  <Form.Item
-                    name="category"
-                    label="Category"
-                    labelAlign="left"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please Select your Category!",
-                      },
-                    ]}
-                  >
-                    <Select placeholder="select your gender">
-                      <Select.Option value="primary">Primary</Select.Option>
-                      <Select.Option value="secondary">Secondary</Select.Option>
-                    </Select>
-                  </Form.Item>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-4">
-                  <Form.Item
-                    name="school_name"
-                    label="School's Name"
-                    labelAlign="left"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please Select your School Name!",
-                      },
-                    ]}
-                  >
-                    <Input />
-                  </Form.Item>
-                  <Form.Item
-                    name="school_head"
-                    label="School's Head:"
-                    labelAlign="left"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please Select your School Head!",
-                      },
-                    ]}
-                  >
-                    <Input />
-                  </Form.Item>
-
-                  <Form.Item name="school_mobile_suffix" label="Mobile No:" labelAlign="left" rules={[{ required: true, message: "Please input your phone number!" }]}>
-                    <Input addonBefore={prefixSelector} />
-                  </Form.Item>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
-                  <Form.Item
-                    name="school_address"
-                    label="School's Address:"
-                    labelAlign="left"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please Select your School Head!",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="School Address" />
-                  </Form.Item>
-
-                  <Form.Item
-                    name="school_email"
-                    labelAlign="left"
-                    label="School Email:"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your Email!",
-                      },
-                      {
-                        type: "email",
-                        message: "Please input a valid email!",
-                      },
-                    ]}
-                  >
-                    <Input type="email" placeholder="Email" />
-                  </Form.Item>
-                </div>
-                <Divider className="m-0"></Divider>
-                <h3 className="text-center w-full text-lg">Student Information</h3>
-                <ConfirmDelete show={show} setShow={setShow} />
-                <div className="flex flex-col md:flex-row gap-x-2 gap-y-4 md:gap-y-0 w-full">
-                  <div className="w-full md:w-3/12 text-xs">
-                    <Button type="primary" className="w-full text-xs" onClick={() => setAddStudentFormVisible(true)} icon={<PlusCircleOutlined />}>
-                      Add Student
-                    </Button>
-                    <AddStudentModal record={{ ...record }} setRecord={setRecord} addStudentFormvisible={addStudentFormvisible} setAddStudentFormVisible={setAddStudentFormVisible} onStudentEdit={onStudentEdit} onStudentSubmit={onStudentSubmit} />
-                  </div>
-                  <div className="w-full md:w-9/12 float-right">
-                    <Table scroll={{ x: "max-content" }} rowSelection={rowSelection} columns={columns} dataSource={[...tableData]} />;
-                  </div>
-                </div>
-                <Form.Item className="flex">
-                  <Button loading={submitProcessing} type="primary" htmlType="submit" className={` py-2 flex-1 ${submitProcessing ? "w-full" : "w-8/12"} `}>
-                    Make Payment
-                  </Button>
-                  <Button type="primary" style={{ display: submitProcessing && "none" }} htmlType="reset" className="py-2 w-3/12 float-right">
-                    Clear
-                  </Button>
-                </Form.Item>
-              </Form>
+            <div className="w-full md:w-9/12 float-right">
+              <Table scroll={{ x: "max-content" }} rowSelection={rowSelection} columns={studentTableColumn(tableData, handleStudentEdit, handleStudentDelete)} dataSource={[...tableData]} />;
             </div>
           </div>
-        </div>
-      </div>
+          <SubmitButton submitProcessing={submitProcessing} />
+        </Form>
+      </FormWrapper>
     </>
   );
 };

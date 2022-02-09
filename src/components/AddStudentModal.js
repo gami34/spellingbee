@@ -1,27 +1,11 @@
 import React from "react";
-import { Form, Input, Button, Modal, Select } from "antd";
+import { Form, Button, Modal } from "antd";
+import { FormItem } from "./FormItem";
+import * as FormRules from "../constants/formRules";
+import { MobilePrefixSelector } from "./MobilePrefixSelector";
+import { formItemLayout } from "../constants/formItemLayout";
 
 const AddStudentModal = ({ record, setRecord, onStudentEdit, onStudentSubmit, addStudentFormvisible, setAddStudentFormVisible }) => {
-  const formItemLayout = {
-    labelCol: {
-      xs: {
-        span: 24,
-      },
-    },
-    wrapperCol: {
-      xs: {
-        span: 24,
-      },
-    },
-  };
-
-  const prefixSelector = (
-    <Form.Item name="parent_mobile_prefix" noStyle>
-      <Select style={{ width: 90 }}>
-        <Select.Option value="+234">+234</Select.Option>
-      </Select>
-    </Form.Item>
-  );
   return (
     <Modal
       closable={true}
@@ -54,95 +38,18 @@ const AddStudentModal = ({ record, setRecord, onStudentEdit, onStudentSubmit, ad
       >
         <h3 className="text-center w-full text-lg">Student Information</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
-          <Form.Item
-            name="student_name"
-            label="Student's Name:"
-            labelAlign="left"
-            rules={[
-              {
-                required: true,
-                message: "Student name!",
-              },
-            ]}
-          >
-            <Input placeholder="Student name" />
-          </Form.Item>
-          <Form.Item
-            name="student_age"
-            labelAlign="left"
-            label="Student's Age:"
-            rules={[
-              {
-                required: true,
-                message: "Student age!",
-              },
-            ]}
-          >
-            <Input placeholder="Student's age" />
-          </Form.Item>
+          <FormItem name="student_name" label="Student's Name:" rule={FormRules.studentNameFormRule} />
+          <FormItem name="student_age" label="Student's Age:" rule={FormRules.studentAgeFormRule} />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
-          <Form.Item
-            name="parent_name"
-            label="Parent's Name:"
-            labelAlign="left"
-            rules={[
-              {
-                required: true,
-                message: "Parent name!",
-              },
-            ]}
-          >
-            <Input placeholder="Parent Name" />
-          </Form.Item>
-
-          <Form.Item
-            name="parent_mobile_suffix"
-            labelAlign="left"
-            label="Parent No:"
-            rules={[
-              {
-                required: true,
-                message: "Parent's number!",
-              },
-            ]}
-          >
-            <Input addonBefore={prefixSelector} placeholder="Parent's Number" />
-          </Form.Item>
+          <FormItem name="parent_name" label="Parent's Name:" rule={FormRules.parentNameFormRule} />
+          <FormItem name="parent_mobile_suffix" label="Parent No:" rule={FormRules.parentMobileSuffixFormRule} addonBefore={<MobilePrefixSelector name="parent_mobile_prefix" />} />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 mb-6">
-          <Form.Item
-            name="parent_address"
-            label="Parent's Address:"
-            labelAlign="left"
-            rules={[
-              {
-                required: true,
-                message: "Parent's address!",
-              },
-            ]}
-          >
-            <Input placeholder="Parent Address" />
-          </Form.Item>
-
-          <Form.Item
-            name="parent_email"
-            labelAlign="left"
-            label="Parent Email:"
-            rules={[
-              {
-                required: true,
-                message: "Please input your Email!",
-              },
-              {
-                type: "email",
-                message: "Please input a valid email!",
-              },
-            ]}
-          >
-            <Input type="email" placeholder="Parent Email" />
-          </Form.Item>
+          <FormItem name="parent_address" label="Parent's Address:" rule={FormRules.parentAddressFormRule} />
+          <FormItem name="parent_email" label="Parent Email:" rule={FormRules.parentEmailFormRule} type="email" />
         </div>
+
         <Form.Item className="flex">
           <Button type="primary" htmlType="submit" className={` py-2 flex-1 w-8/12`}>
             Add Student Info

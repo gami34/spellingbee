@@ -5,6 +5,8 @@ const initialState = {
 };
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "REGISTRATION":
+      return { ...state, data: action.payload.data };
     default:
       return state;
   }
