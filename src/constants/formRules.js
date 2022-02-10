@@ -10,7 +10,18 @@ export const scholeHeadFormRule = [
     message: "Please Select your School Head!",
   },
 ];
-export const schoolMobileFormRule = [{ required: true, message: "Please input your phone number!" }];
+export const schoolMobileFormRule = [
+  {
+    required: true,
+    validator: async (_, value) => {
+      if (!value) return Promise.reject(new Error("Please input your phone number!"));
+      const regex = /\d/g;
+      const digitArray = value.match(regex);
+      if (digitArray.length === value.length && ((digitArray.length === 10 && value[0] !== "0") || (digitArray.length === 11 && value[0] === "0"))) return Promise.resolve();
+      return Promise.reject(new Error("Please input a valid phone number!"));
+    },
+  },
+];
 export const schoolAddressFormRule = [
   {
     required: true,
@@ -66,7 +77,13 @@ export const parentNameFormRule = [
 export const parentMobileSuffixFormRule = [
   {
     required: true,
-    message: "Parent's number!",
+    validator: async (_, value) => {
+      if (!value) return Promise.reject(new Error("phone number!"));
+      const regex = /\d/g;
+      const digitArray = value.match(regex);
+      if (digitArray.length === value.length && ((digitArray.length === 10 && value[0] !== "0") || (digitArray.length === 11 && value[0] === "0"))) return Promise.resolve();
+      return Promise.reject(new Error("valid phone number!"));
+    },
   },
 ];
 export const parentAddressFormRule = [

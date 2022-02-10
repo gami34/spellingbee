@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Form, Button, Divider, Table } from "antd";
+import { Form, Button, Divider, Table, Steps } from "antd";
 import Navbar from "../components/navbar";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import Nigeria from "naija-state-local-government";
 import AddStudentModal from "../components/AddStudentModal";
 import ConfirmDelete from "../components/ConfirmDelete";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registration } from "../actions/registration";
 import { FormWrapper } from "../components/FormWrapper";
 import { studentTableColumn } from "../constants/studentTableColumn";
@@ -15,6 +15,9 @@ import * as FormRules from "../constants/formRules";
 import { MobilePrefixSelector } from "../components/MobilePrefixSelector";
 import { SubmitButton } from "../components/SubmitButton";
 import { formItemLayout } from "../constants/formItemLayout";
+import { billing } from "../actions/billing";
+import { useNavigate } from "react-router-dom";
+import { dataFormatter } from "../utils/dataFormatter";
 
 const MultipleForm = () => {
   const [submitProcessing, setSubmitProcessing] = useState(false);
@@ -27,6 +30,9 @@ const MultipleForm = () => {
   const [addStudentFormvisible, setAddStudentFormVisible] = React.useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
 
+  const navigate = useNavigate();
+
+  const { pricePerStudent } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const handleStudentEdit = (record) => {
@@ -41,7 +47,7 @@ const MultipleForm = () => {
       parent_address: editedData.parent_address,
       parent_email: editedData.parent_email,
       parent_name: editedData.parent_name,
-      parent_number: editedData.parent_mobile_prefix + editedData.parent_mobile_suffix,
+      parent_number: editedData.parent_mobile_prefix + editedData.parent_mobile_suffix === 11 ? editedData.parent_mobile_suffix.slice(1, 10) : editedData.parent_mobile_suffix,
       student_age: editedData.student_age,
       student_name: editedData.student_name,
     });
@@ -71,8 +77,10 @@ const MultipleForm = () => {
 
   const onSubmit = (values) => {
     setSubmitProcessing(true);
-    const data = { ...values, students: tableData };
+    const data = dataFormatter("multiple", { ...values, students: tableData });
     dispatch(registration(data));
+    dispatch(billing({ amount: pricePerStudent * tableData.length, numberOfStudent: tableData.length, name: values.school_name, email: values.school_email, phonenumber: values.school_mobile_suffix }));
+    setTimeout(() => navigate("/checkout"), 500);
   };
 
   const onStudentSubmit = (values) => {
@@ -82,7 +90,7 @@ const MultipleForm = () => {
       student_age: values.student_age,
       parent_name: values.parent_name,
       parent_address: values.parent_address,
-      parent_number: values.parent_mobile_prefix + values.parent_mobile_suffix,
+      parent_number: values.parent_mobile_prefix + values.parent_mobile_suffix === 11 ? values.parent_mobile_suffix.slice(1, 10) : values.parent_mobile_suffix,
       parent_email: values.parent_email,
     });
     setTableData(tableData);
@@ -99,13 +107,18 @@ const MultipleForm = () => {
     <>
       <Navbar />
       <FormWrapper header="Multiple Registration" type="multiple">
+        <Steps size="small" current={0} style={{ marginBottom: "50px", marginTop: "30px" }}>
+          <Steps.Step title="In Progress" subTitle="School Information Registration." />
+          <Steps.Step title="Pending" subTitle="Payment." />
+        </Steps>
         <Form
           name="individual_signup"
           className="w-full"
           onFinish={onSubmit}
           {...formItemLayout}
           initialValues={{
-            mobile_prefix: "+234",
+            parent_mobile_prefix: "+234",
+            school_mobile_prefix: "+234",
           }}
         >
           <div className="grid grid-cols-2  sm:grid-cols-4 gap-4">

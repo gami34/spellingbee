@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, Checkbox, Divider, Select } from "antd";
+import { Form, Divider, Steps } from "antd";
 import Navbar from "../components/navbar";
 import Nigeria from "naija-state-local-government";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registration } from "../actions/registration";
-import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
-import { flutterwaveConfigGerator } from "../utils/flutterwaveConfig.generator";
 import { FormWrapper } from "../components/FormWrapper";
 import { FormItem } from "../components/FormItem";
 import * as FormRules from "../constants/formRules";
@@ -14,17 +12,16 @@ import { SubmitButton } from "../components/SubmitButton";
 import { dataFormatter } from "../utils/dataFormatter";
 import { formItemLayout } from "../constants/formItemLayout";
 import { MobilePrefixSelector } from "../components/MobilePrefixSelector";
+import { billing } from "../actions/billing";
+import { useNavigate } from "react-router-dom";
 
 const IndividualForm = () => {
+  const { pricePerStudent } = useSelector((state) => state.user);
   const [submitProcessing, setSubmitProcessing] = useState(false);
   const states = Nigeria.states();
   const [lgas, setLGAS] = React.useState([]);
-  const [paymentConfig, setPaymentConfig] = React.useState(flutterwaveConfigGerator(3000, { name: "", email: "spellingbee@spellingbee.com", phonenumber: "" }));
-  const [customerInfo, setCustomerInfo] = React.useState();
   const dispatch = useDispatch();
-
-  const handlePayment = useFlutterwave(paymentConfig);
-  console.log(handlePayment);
+  const navigate = useNavigate();
 
   const handleNigeriaStateChange = (value) => {
     setLGAS(Nigeria.lgas(value).lgas);
@@ -34,15 +31,8 @@ const IndividualForm = () => {
     setSubmitProcessing(true);
     const data = dataFormatter("single", values);
     dispatch(registration(data));
-    setCustomerInfo({ name: values.school_name, email: values.school_email, phonenumber: values.school_mobile_suffix });
-
-    handlePayment({
-      callback: (response) => {
-        console.log(response);
-        closePaymentModal();
-      },
-      onClose: () => {},
-    });
+    dispatch(billing({ amount: pricePerStudent, numberOfStudent: 1, name: values.school_name, email: values.school_email, phonenumber: values.school_mobile_suffix }));
+    setTimeout(() => navigate("/checkout"), 500);
   };
 
   useEffect(() => {
@@ -54,7 +44,10 @@ const IndividualForm = () => {
     <>
       <Navbar />
       <FormWrapper header="INDIVIDUAL REGISTRATION" type="single">
-        const [paymentModal, setPaymentModal] = React.useState(false);
+        <Steps size="small" current={0} style={{ marginBottom: "50px", marginTop: "30px" }}>
+          <Steps.Step title="In Progress" subTitle="School Information Registration." />
+          <Steps.Step title="Pending" subTitle="Payment." />
+        </Steps>
         <Form
           name="individual_signup"
           className="w-full"
@@ -80,7 +73,7 @@ const IndividualForm = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-4">
             <FormItem name="school_name" label="School's Name:" rule={FormRules.scholeNameFormRule} />
             <FormItem name="school_head" label="School's Head:" rule={FormRules.scholeHeadFormRule} />
-            <FormItem name="school_mobile_suffix" label="Mobile No:" rule={FormRules.schoolMobileFormRule} addonBefore={<MobilePrefixSelector name="school_mobile_prefix" />} />
+            <FormItem name="school_mobile_suffix" maxLength={11} label="Mobile No:" rule={FormRules.schoolMobileFormRule} addonBefore={<MobilePrefixSelector name="school_mobile_prefix" />} />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
             <FormItem name="school_address" label="School's Address:" rule={FormRules.schoolAddressFormRule} />
@@ -94,7 +87,7 @@ const IndividualForm = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
             <FormItem name="parent_name" label="Parent's Name:" rule={FormRules.parentNameFormRule} />
-            <FormItem name="parent_mobile_suffix" label="Parent No:" rule={FormRules.parentMobileSuffixFormRule} addonBefore={<MobilePrefixSelector name="parent_mobile_prefix" />} />
+            <FormItem name="parent_mobile_suffix" label="Parent No:" maxLength={11} rule={FormRules.parentMobileSuffixFormRule} addonBefore={<MobilePrefixSelector name="parent_mobile_prefix" />} />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 mb-6">
             <FormItem name="parent_address" label="Parent's Address:" rule={FormRules.parentAddressFormRule} />

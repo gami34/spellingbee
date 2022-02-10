@@ -6,6 +6,8 @@ import * as ROUTES from "./constants/routes";
 const Home = lazy(() => import("./pages/Home"));
 const IndividualForm = lazy(() => import("./pages/IndividualForm"));
 const MultipleForm = lazy(() => import("./pages/MultipleForm"));
+const CheckOut = lazy(() => import("./pages/CheckOut"));
+const RegistrationComplete = lazy(() => import("./pages/RegistrationComplete"));
 
 function App() {
   const socket = useSelector((state) => state.socketIO?.socket);
@@ -49,6 +51,24 @@ function App() {
         element={
           <Suspense fallback={<div></div>}>
             <MultipleForm />
+          </Suspense>
+        }
+      />
+      <Route
+        path={ROUTES.CHECKOUT}
+        exact
+        element={
+          <Suspense fallback={<div></div>}>
+            <CheckOut />
+          </Suspense>
+        }
+      />
+      <Route
+        path={ROUTES.REGISTRATION_COMPLETE}
+        exact
+        element={
+          <Suspense fallback={<div></div>}>
+            <RegistrationComplete />
           </Suspense>
         }
       />
