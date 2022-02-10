@@ -1,6 +1,6 @@
 export const flutterwaveConfigGenerator = (amount, customerInfo) => {
   return {
-    public_key: process.env.REACT_APP_FLUTTERWAVE_PUBLICKEY,
+    public_key: process.env.REACT_APP_FLUTTERWAVE1_PUBLICKEY,
     tx_ref: Date.now().toString(),
     amount: amount,
     currency: "NGN",
