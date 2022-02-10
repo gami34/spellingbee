@@ -3,7 +3,7 @@ import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 import { flutterwaveConfigGenerator } from "../utils/flutterwaveConfig.generator";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Steps } from "antd";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { processsRegistraton } from "../actions/billing";
 
 const CheckOut = () => {
@@ -40,7 +40,9 @@ const CheckOut = () => {
           <div className="mim-w-80 m-6 w-full sm:w-6/12 min-h-80 rounded shadow-lg shadow-green-dark  bg-gray-50">
             <h3 className="h-12 mt-4 bg-yellow-400 shadow-lg flex justify-between pl-6 items-center">
               <span className="text-lg font-bold">NAPPS SpellingBee</span>
-              <img className="w-24 h-24 -mr-4 rounded-full shadow-lg shadow-gray-600" src="/images/cb1.jpeg" alt="" />
+              <Link className="w-24 h-24 -mr-4 rounded-full shadow-lg shadow-gray-600" to="/">
+                <img className="w-24 h-24 -mr-4 rounded-full shadow-lg shadow-gray-600" src="/images/cb1.jpeg" alt="" />
+              </Link>
             </h3>
             <div className="p-6 overflow-hidden">
               <Steps size="small" current={1}>

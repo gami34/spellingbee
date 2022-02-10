@@ -14,7 +14,7 @@ export const billing = (data) => {
 export const processsRegistraton = (paymentData) => {
   return async (dispatch, getState) => {
     const state = getState();
-    const { data } = await axios.post("http://localhost:8080/registration", { ...state.user.data, ...paymentData, payment_platform: "flutterwave" });
+    const { data } = await axios.post(process.env.REACT_APP_HOST1, { ...state.user.data, ...paymentData, payment_platform: "flutterwave" });
     console.log("async dispatch", data, paymentData, { ...state.user.data, ...paymentData, payment_platform: "flutterwave" });
     dispatch({
       type: "SERVER_REGISTRATION_RESPONSE",

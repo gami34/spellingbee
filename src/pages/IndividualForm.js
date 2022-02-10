@@ -12,7 +12,7 @@ import { SubmitButton } from "../components/SubmitButton";
 import { dataFormatter } from "../utils/dataFormatter";
 import { formItemLayout } from "../constants/formItemLayout";
 import { MobilePrefixSelector } from "../components/MobilePrefixSelector";
-import { billing } from "../actions/billing";
+import { billing, processsRegistration } from "../actions/billing";
 import { useNavigate } from "react-router-dom";
 
 const IndividualForm = () => {
@@ -38,6 +38,14 @@ const IndividualForm = () => {
   useEffect(() => {
     document.querySelector("html").style.scrollBehavior = "auto";
     window.scroll({ top: 0 });
+    dispatch(registration({}));
+    dispatch({
+      type: "SERVER_REGISTRATION_RESPONSE",
+      payload: {
+        data: false,
+      },
+    });
+    dispatch(billing({}));
   }, [location.pathname]);
 
   return (

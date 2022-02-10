@@ -101,6 +101,14 @@ const MultipleForm = () => {
     document.querySelector("html").style.scrollBehavior = "auto";
     window.scroll({ top: 0 });
     document.querySelector("html").style.scrollBehavior = "";
+    dispatch(registration({}));
+    dispatch({
+      type: "SERVER_REGISTRATION_RESPONSE",
+      payload: {
+        data: false,
+      },
+    });
+    dispatch(billing({}));
   }, [location.pathname]); // triggered on route change
 
   return (
