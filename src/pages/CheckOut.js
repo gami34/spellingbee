@@ -39,7 +39,7 @@ const CheckOut = () => {
         <div className="h-screen bg-gray-400 flex items-center justify-center overflow-hidden">
           <div className="mim-w-80 m-6 w-full sm:w-6/12 min-h-80 rounded shadow-lg shadow-green-dark  bg-gray-50">
             <h3 className="h-12 mt-4 bg-yellow-400 shadow-lg flex justify-between pl-6 items-center">
-              <span className="text-lg font-bold">NAPPS SpellingBee</span>
+              <span className="text-lg font-bold">SpellingBee</span>
               <Link className="w-24 h-24 -mr-4 rounded-full shadow-lg shadow-gray-600" to="/">
                 <img className="w-24 h-24 -mr-4 rounded-full shadow-lg shadow-gray-600" src="/images/cb1.jpeg" alt="" />
               </Link>

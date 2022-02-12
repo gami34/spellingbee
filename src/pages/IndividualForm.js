@@ -30,6 +30,7 @@ const IndividualForm = () => {
   const onSubmit = (values) => {
     setSubmitProcessing(true);
     const data = dataFormatter("single", values);
+    console.log(data);
     dispatch(registration(data));
     dispatch(billing({ amount: pricePerStudent, numberOfStudent: 1, name: values.school_name, email: values.school_email, phonenumber: values.school_mobile_suffix }));
     setTimeout(() => navigate("/checkout"), 500);
@@ -74,8 +75,13 @@ const IndividualForm = () => {
               <SelectItem dataMap={lgas} />
             </FormItem>
             <FormItem name="ward" label="Ward" type="text" />
-            <FormItem name="category" label="Category" rule={FormRules.schoolCategoryFormRule}>
-              <SelectItem dataMap={["primary", "secondary"]} />
+            <FormItem name="category" label="Age Category" rule={FormRules.schoolCategoryFormRule}>
+              <SelectItem
+                dataMap={[
+                  { value: "primary", label: "7-11" },
+                  { value: "secondary", label: "12-16" },
+                ]}
+              />
             </FormItem>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-4">

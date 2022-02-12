@@ -47,7 +47,7 @@ const MultipleForm = () => {
       parent_address: editedData.parent_address,
       parent_email: editedData.parent_email,
       parent_name: editedData.parent_name,
-      parent_number: editedData.parent_mobile_prefix + editedData.parent_mobile_suffix === 11 ? editedData.parent_mobile_suffix.slice(1, 10) : editedData.parent_mobile_suffix,
+      parent_number: editedData.parent_mobile_prefix + (editedData.parent_mobile_suffix.length === 11 ? editedData.parent_mobile_suffix.slice(1, 11) : editedData.parent_mobile_suffix),
       student_age: editedData.student_age,
       student_name: editedData.student_name,
     });
@@ -90,7 +90,7 @@ const MultipleForm = () => {
       student_age: values.student_age,
       parent_name: values.parent_name,
       parent_address: values.parent_address,
-      parent_number: values.parent_mobile_prefix + values.parent_mobile_suffix === 11 ? values.parent_mobile_suffix.slice(1, 10) : values.parent_mobile_suffix,
+      parent_number: values.parent_mobile_prefix + (values.parent_mobile_suffix.length === 11 ? values.parent_mobile_suffix.slice(1, 11) : values.parent_mobile_suffix),
       parent_email: values.parent_email,
     });
     setTableData(tableData);
@@ -138,7 +138,12 @@ const MultipleForm = () => {
             </FormItem>
             <FormItem name="ward" label="Ward" type="text" />
             <FormItem name="category" label="Category" rule={FormRules.schoolCategoryFormRule}>
-              <SelectItem dataMap={["primary", "secondary"]} />
+              <SelectItem
+                dataMap={[
+                  { value: "primary", label: "7-11" },
+                  { value: "secondary", label: "12-16" },
+                ]}
+              />
             </FormItem>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-4">

@@ -3,6 +3,7 @@ const initialState = {
   accountName: "player001",
   role: "Administrator",
   pricePerStudent: 3000,
+  backEndRegistrationStatus: false,
 };
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {

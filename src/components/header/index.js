@@ -8,9 +8,6 @@ const Header = () => {
       <div className="flex justify-center items-center">
         <div className="flex justify-center items-center w-full sm:w-6/12 pt-16 px-4">
           <span className="w-6/12">
-            <img className="w-10/12" src="/images/cb2.JPEG" alt="" />
-          </span>
-          <span className="w-6/12">
             <img className="w-full" src="/images/cb1.JPEG" alt="" />
           </span>
         </div>
@@ -18,7 +15,7 @@ const Header = () => {
       <h3 className="text-center text-xl font-bold my-0 py-0">
         REGISTER FOR 2022
         <br />
-        NAPPS SPELLING BEE COMPETITION
+        SPELLING BEE COMPETITION
       </h3>
       <p className="text-xs text-gray-800 mx-4 text-justify">
         The Spelling Bee is a competition designed to inculcate the basic imperatives of effective communication, ultimately impacting improved spelling skills, development of poise, increase students’ vocabulary, pronunciation and accurate word
