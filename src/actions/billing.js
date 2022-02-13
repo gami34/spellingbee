@@ -19,7 +19,7 @@ export const processsRegistraton = (paymentData) => {
     dispatch({
       type: "SERVER_REGISTRATION_RESPONSE",
       payload: {
-        data: data.success === true ? "failed" : "failed",
+        data: data.success === true ? "success" : "failed",
       },
     });
   };
