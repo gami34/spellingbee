@@ -26,7 +26,7 @@ const RegistrationComplete = () => {
                     <Steps.Step title="Finished" subTitle="Payment." />
                   </Steps>
                   <h3 className=" text-2xl font-extrabold text-green-dark text-center">Registration Is Now Complete</h3>
-                  <h4 className="text-center"> A receipt of transaction has been sent to your mail by your transaction vendor</h4>
+                  <h4 className="text-center">Your registration and payment for the SpellingBee competition was successful. Kindly check your email for registration/payment confirmation</h4>
                 </div>
               </div>
             </div>
