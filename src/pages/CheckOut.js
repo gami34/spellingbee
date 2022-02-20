@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Button, Steps } from "antd";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { processsRegistraton } from "../actions/billing";
+import cb1 from "../images/cb1.jpeg";
 
 const CheckOut = () => {
   const { billing } = useSelector((state) => state.user);
@@ -41,7 +42,7 @@ const CheckOut = () => {
             <h3 className="h-12 mt-4 bg-yellow-400 shadow-lg flex justify-between pl-6 items-center">
               <span className="text-lg font-bold">SpellingBee</span>
               <Link className="w-24 h-24 -mr-4 rounded-full shadow-lg shadow-gray-600" to="/">
-                <img className="w-24 h-24 -mr-4 rounded-full shadow-lg shadow-gray-600" src="/images/cb1.jpeg" alt="" />
+                <img className="w-24 h-24 -mr-4 rounded-full shadow-lg shadow-gray-600" src={cb1} alt="" />
               </Link>
             </h3>
             <div className="p-6 overflow-hidden">

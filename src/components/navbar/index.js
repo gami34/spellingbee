@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import cb1 from "../../images/cb1.jpeg";
 import * as ROUTES from "../../constants/routes";
 
 function Navbar() {
@@ -10,7 +11,7 @@ function Navbar() {
           {/* nav: Left side */}
           <div className="flex w-6/12 lg:w-3/12 items-center">
             <Link className="w-full flex gap-4 justify-start text-green-dark hover:text-yellowgreen items-center" to={ROUTES.HOME}>
-              <img src="/images/cb1.JPEG" className=" h-8 xs:h-10" alt="chess battlefield logo" />
+              <img src={cb1} className=" h-8 xs:h-10" alt="spellingbee logo" />
               <span className="font-bold text-lg hover:text-yellowgreen">Spelling Bee</span>
             </Link>
           </div>

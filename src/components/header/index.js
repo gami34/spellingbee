@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import cb1 from "../../images/cb1.jpeg";
 import * as ROUTES from "../../constants/routes";
 
 const Header = () => {
@@ -8,7 +9,7 @@ const Header = () => {
       <div className="flex justify-center items-center">
         <div className="flex justify-center items-center w-full sm:w-6/12 pt-16 px-4">
           <span className="w-6/12">
-            <img className="w-full" src="/images/cb1.JPEG" alt="" />
+            <img className="w-full" src={cb1} alt="" />
           </span>
         </div>
       </div>
